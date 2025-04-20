@@ -22,7 +22,8 @@ Do not explain anything. Return only valid SQL, no markdown or commentary.
 llm = ChatGroq(
     model_name="llama-3.3-70b-versatile",
     groq_api_key=GROQ_API_KEY,
-    temperature=0
+    temperature=0,
+    max_tokens=512
 )
 
 sql_chain = SQLDatabaseChain.from_llm(
