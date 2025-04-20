@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>VoiceQuerySystem 🎙</title>
+  <!-- This script is necessary for recording annd is compatible with my backend speech recognition -->
+  <script src="https://cdn.webrtc-experiment.com/RecordRTC.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+  <h1>Voice Query System</h1>
+
+  <div class="button-group">
+    <button id="start">Start Recording</button>
+    <button id="stop" disabled>Stop & Submit</button>
+  </div>
+
+  <p id="status">Status: Please start recording</p>
+
+  <div id="querySummary" class="query-box hidden">
+    <p><strong>NL Question:</strong> <span id="nlQuery"></span></p>
+    <p><strong> SQL Query:</strong></p>
+    <pre id="sqlQuery"></pre>
+  </div>
+
+  <div id="queryResults" class="result-table hidden">
+    <p><strong>Query Results:</strong></p>
+    <table id="resultsTable"></table>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
