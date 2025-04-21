@@ -2,7 +2,7 @@ let recorder;
 
 const startBtn = document.getElementById("start");
 const stopBtn = document.getElementById("stop");
-const status = document.getElementById("status");
+const statusText = document.getElementById("status");
 
 startBtn.onclick = async () => {
   const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -18,7 +18,7 @@ startBtn.onclick = async () => {
   recorder.startRecording();
   startBtn.disabled = true;
   stopBtn.disabled = false;
-  status.textContent = "🎙 Recording in progress...";
+  statusText.textContent = "Recording in progress...";
 };
 
 stopBtn.onclick = () => {
@@ -28,7 +28,7 @@ stopBtn.onclick = () => {
 
     const formData = new FormData();
     formData.append("audio", audioBlob, "voice.wav");
-    status.textContent = "⏳ Uploading...";
+    statusText.textContent = "Uploading...";
 
     try {
       const response = await fetch("http://localhost:5000/voice-query", {
@@ -41,18 +41,16 @@ stopBtn.onclick = () => {
       const transcribed = json.natural_language_query || json.transcribed_text || "";
       const results = json.results || [];
 
-      // Show the natural language query and SQL
       document.getElementById("nlQuery").textContent = transcribed;
       document.getElementById("sqlQuery").textContent = sql;
       document.getElementById("querySummary").classList.remove("hidden");
 
-      // Render the results table
       const table = document.getElementById("resultsTable");
       const resultBox = document.getElementById("queryResults");
       table.innerHTML = "";
 
       if (results.length > 0) {
-        // Guess headers from SQL or default to Column 1, 2, ...
+        // I had AI help me with this part to extract the headers from the SQL query
         const headers = sql.match(/select\s+(.*?)\s+from/i)?.[1]
           ?.split(",")
           .map(h => h.split(" as ").pop().split(".").pop().replace(/["`]/g, "").trim())
@@ -86,9 +84,9 @@ stopBtn.onclick = () => {
         resultBox.classList.remove("hidden");
       }
 
-      status.textContent = "✅ Results ready!";
+      statusText.textContent = "Results ready!";
     } catch (err) {
-      status.textContent = `❌ Error: ${err.message}`;
+      statusText.textContent = `Error: ${err.message}`;
     }
 
     startBtn.disabled = false;

@@ -1,11 +1,9 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException, Form
-
+from fastapi import FastAPI, UploadFile, File, HTTPException
 import sqlite3
 import speech_recognition as sr
 from .config import SCHEMA_INFO
 from fastapi.middleware.cors import CORSMiddleware
-from transformers import pipeline
-from .nl2sql import sql_chain
+from .llmWrapper import sql_chain
 from .schema import NLQuery
 
 app = FastAPI(title="VoiceQuerySystem")
@@ -47,12 +45,15 @@ def query_endpoint(payload: NLQuery):
 
         result_text = output["result"]
         print("results", result_text)
-
+        print("Raw output:", output["result"])
         sql_line = None
         for line in result_text.splitlines():
             line = line.strip()
             if line.lower().startswith("sqlquery:"):
                 sql_line = line.split(":", 1)[-1].strip()
+                break
+            elif line.lower().startswith("select"):
+                sql_line = line 
                 break
 
         if not sql_line:

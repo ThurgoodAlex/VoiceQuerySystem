@@ -22,7 +22,7 @@ body {
   }
   
   button {
-    background-color: #3b82f6;
+    background-color: #004aad;
     color: white;
     border: none;
     border-radius: 8px;
@@ -38,8 +38,8 @@ body {
     cursor: not-allowed;
   }
   
-  button:hover:not(:disabled) {
-    background-color: #2563eb;
+  #start:hover {
+    background-color: #6f98f1;
   }
   
   #status {
@@ -47,6 +47,9 @@ body {
     font-weight: 500;
   }
   
+  #stop:enabled{
+    background-color: #dc2626;
+  }
   pre#result {
     background-color: #ffffff;
     padding: 1rem;
@@ -58,7 +61,6 @@ body {
     word-wrap: break-word;
   }
   
-
   .query-box {
     background-color: #fff;
     border-left: 4px solid #3b82f6;
@@ -79,11 +81,10 @@ body {
     word-break: break-word;
   }
 
-  
-  .result-table table {
+  .result-table {
     width: 100%;
-    border-collapse: collapse;
     margin-top: 0.5rem;
+    border-collapse: collapse;
   }
   
   .result-table th,
