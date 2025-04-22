@@ -50,11 +50,8 @@ stopBtn.onclick = () => {
       table.innerHTML = "";
 
       if (results.length > 0) {
-        // I had AI help me with this part to extract the headers from the SQL query
-        const headers = sql.match(/select\s+(.*?)\s+from/i)?.[1]
-          ?.split(",")
-          .map(h => h.split(" as ").pop().split(".").pop().replace(/["`]/g, "").trim())
-          || results[0].map((_, i) => `Column ${i + 1}`);
+        // Create table headers and rows dynamically. Ai helped me with this.
+        const headers = Object.keys(results[0]);
 
         const thead = document.createElement("thead");
         const headRow = document.createElement("tr");
@@ -69,21 +66,20 @@ stopBtn.onclick = () => {
         const tbody = document.createElement("tbody");
         results.forEach(row => {
           const tr = document.createElement("tr");
-          row.forEach(cell => {
+          headers.forEach(h => {
             const td = document.createElement("td");
-            td.textContent = cell;
+            td.textContent = row[h];
             tr.appendChild(td);
           });
           tbody.appendChild(tr);
         });
         table.appendChild(tbody);
 
-        resultBox.classList.remove("hidden");
       } else {
         table.innerHTML = "<tr><td colspan='100%'>No results returned.</td></tr>";
-        resultBox.classList.remove("hidden");
       }
 
+      resultBox.classList.remove("hidden");
       statusText.textContent = "Results ready!";
     } catch (err) {
       statusText.textContent = `Error: ${err.message}`;

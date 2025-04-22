@@ -12,9 +12,15 @@ body {
   h1 {
     font-size: 1.75rem;
     font-weight: 600;
-    margin-bottom: 1.5rem;
+
+  }
+
+
+  .header{
+    text-align: center;
   }
   
+
   .button-group {
     display: flex;
     gap: 1rem;
